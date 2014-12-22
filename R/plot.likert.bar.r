@@ -32,7 +32,7 @@ utils::globalVariables(c('value','Group','variable','low','Item','high',
 #' @param ordered reorder items from high to low.
 #' @param wrap width to wrap label text for item labels
 #' @param wrap.grouping width to wrap label text for group labels.
-#' @param legend title for the legend.
+#' @param legend.title title for the legend.
 #' @param legend.position the position for the legend ("left", "right", "bottom",
 #'        "top", or two-element numeric vector).
 #' @param panel.arrange how panels for grouped likert items should be arrange.
@@ -65,7 +65,7 @@ likert.bar.plot <- function(likert,
 							ordered=TRUE,
 							wrap=ifelse(is.null(likert$grouping), 50, 100),
 							wrap.grouping=50,
-							legend='Response',
+							legend.title='Response',
 							legend.position='bottom',
 							panel.arrange='v',
 							panel.strip.color='#F0F0F0',
@@ -149,12 +149,12 @@ likert.bar.plot <- function(likert,
 						 aes(fill=variable), stat='identity') + 
 				geom_bar(data=results.high, aes(fill=variable), stat='identity')
 			names(cols) <- levels(results$variable)
-			p <- p + scale_fill_manual(legend, breaks=names(cols), values=cols)
+			p <- p + scale_fill_manual(name=legend.title, breaks=names(cols), values=cols)
 		} else {
 			ymin <- 0
 			p <- ggplot(results, aes(y=value, x=Group, group=variable))
 			p <- p + geom_bar(stat='identity', aes(fill=variable)) +
-				scale_fill_manual(legend, 
+				scale_fill_manual(name=legend.title, 
 							values=cols, 
 							breaks=levels(results$variable),
 							labels=levels(results$variable))
@@ -247,11 +247,11 @@ likert.bar.plot <- function(likert,
 						 aes(fill=variable), stat='identity') + 
 				geom_bar(data=results.high, aes(fill=variable), stat='identity')
 			names(cols) <- levels(results$variable)
-			p <- p + scale_fill_manual(legend, breaks=names(cols), values=cols)
+			p <- p + scale_fill_manual(name=legend.title, breaks=names(cols), values=cols)
 		} else {
 			p <- ggplot(results, aes(y=value, x=Item, group=Item))
 			p <- p + geom_bar(stat='identity', aes(fill=variable))
-			p <- p + scale_fill_manual(legend, values=cols, 
+			p <- p + scale_fill_manual(name=legend.title, values=cols, 
 							  breaks=levels(results$variable), 
 							  labels=levels(results$variable))
 		}
